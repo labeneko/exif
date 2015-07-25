@@ -1085,11 +1085,11 @@ class UploadHandler
                     $append_file ? FILE_APPEND : 0
                 );
             }
+            $file_size = $this->get_file_size($file_path, $append_file);
             $image = new Imagick();
             $image->readImage($file_path);
             $image->stripImage();
             $image->writeImage($file_path);
-            $file_size = $this->get_file_size($file_path, $append_file);
             if ($file_size === $file->size) {
                 $file->url = $this->get_download_url($file->name);
                 if ($this->is_valid_image_file($file_path)) {
