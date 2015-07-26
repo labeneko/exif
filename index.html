@@ -35,6 +35,9 @@
     <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
+    <br>
+    <h2>Exif情報を削除する</h2>
+    <br>
     <!-- The file upload form used as target for the file upload widget -->
     <form id="fileupload" action="//jquery-file-upload.appspot.com/" method="POST" enctype="multipart/form-data">
         <!-- Redirect browsers with JavaScript disabled to the origin page -->
@@ -64,6 +67,45 @@
         <!-- The table listing the files available for upload/download -->
         <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
     </form>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">使い方</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <span class="btn btn-success btn-xs">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>写真を選択...</span>
+                    </span>
+                    ボタンから、Exif情報を削除したい写真(jpgファイル)を選択してください
+                </li>
+                <li class="list-group-item">
+                    <span class="btn btn-info btn-xs">
+                        <i class="glyphicon glyphicon-retweet"></i>
+                        <span>Exif情報を削除</span>
+                    </span>
+                    ボタンを押すと、Exif情報の削除処理が行われます
+                </li>
+                <li class="list-group-item">
+                    処理が終わったら、
+                    <span class="btn btn-primary btn-xs">
+                        <i class="glyphicon glyphicon-download"></i>
+                        <span>ダウンロード</span>
+                    </span>
+                    ボタンを押して、ダウンロードして下さい
+                </li>
+                <li class="list-group-item">
+                    画像は一定時間後に削除されますが、気になる方は
+                    <span class="btn btn-danger btn-xs">
+                        <i class="glyphicon glyphicon-trash"></i>
+                        <span>写真を削除</span>
+                    </span>
+                    ボタンを押すと、即座に削除されます
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 <!-- The blueimp Gallery widget -->
 <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
@@ -92,7 +134,7 @@
         </td>
         <td>
             {% if (!i && !o.options.autoUpload) { %}
-                <button class="btn btn-primary start" disabled>
+                <button class="btn btn-info start" disabled>
                     <i class="glyphicon glyphicon-retweet"></i>
                     <span>Exif情報を削除</span>
                 </button>
