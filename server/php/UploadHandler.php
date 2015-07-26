@@ -833,6 +833,39 @@ class UploadHandler
         return true;
     }
 
+    protected function imagick_orient_image_by_orientation($image, $orientation) {
+        $background = new \ImagickPixel('none');
+        switch ($orientation) {
+            case \imagick::ORIENTATION_TOPRIGHT: // 2
+                $image->flopImage(); // horizontal flop around y-axis
+                break;
+            case \imagick::ORIENTATION_BOTTOMRIGHT: // 3
+                $image->rotateImage($background, 180);
+                break;
+            case \imagick::ORIENTATION_BOTTOMLEFT: // 4
+                $image->flipImage(); // vertical flip around x-axis
+                break;
+            case \imagick::ORIENTATION_LEFTTOP: // 5
+                $image->flopImage(); // horizontal flop around y-axis
+                $image->rotateImage($background, 270);
+                break;
+            case \imagick::ORIENTATION_RIGHTTOP: // 6
+                $image->rotateImage($background, 90);
+                break;
+            case \imagick::ORIENTATION_RIGHTBOTTOM: // 7
+                $image->flipImage(); // vertical flip around x-axis
+                $image->rotateImage($background, 270);
+                break;
+            case \imagick::ORIENTATION_LEFTBOTTOM: // 8
+                $image->rotateImage($background, 270);
+                break;
+            default:
+                return false;
+        }
+        $image->setImageOrientation(\imagick::ORIENTATION_TOPLEFT); // 1
+        return true;
+    }
+
     protected function imagick_create_scaled_image($file_name, $version, $options) {
         list($file_path, $new_file_path) =
             $this->get_scaled_image_file_paths($file_name, $version);
@@ -1081,7 +1114,7 @@ class UploadHandler
             $image->readImage($file_path);
             $orientation = $image->getImageOrientation();
             $image->stripImage();
-            $image->setImageOrientation($orientation);
+            $this->imagick_orient_image_by_orientation($image, $orientation);
             $image->writeImage($file_path);
             if ($file_size === $file->size) {
                 $file->url = $this->get_download_url($file->name);
