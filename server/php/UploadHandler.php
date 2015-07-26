@@ -1079,7 +1079,9 @@ class UploadHandler
             $file_size = $this->get_file_size($file_path, $append_file);
             $image = new Imagick();
             $image->readImage($file_path);
+            $orientation = $image->getImageOrientation();
             $image->stripImage();
+            $image->setImageOrientation($orientation);
             $image->writeImage($file_path);
             if ($file_size === $file->size) {
                 $file->url = $this->get_download_url($file->name);
